@@ -1,0 +1,58 @@
+/* Page-specific styling */
+
+/* Formatting for the sample buttons */
+
+.body-container {
+  background: #EFEFEF;
+}
+#message-body {
+  padding: 10px;
+  margin: 0;
+}
+#styleguide-select {
+  width: 100%;
+}
+.btn-fill {
+  display: block;
+  text-align: center;
+  padding: 5px 10px;
+  background: #CDCDCD;
+}
+.heading {
+  width: 100%;
+  text-align: center;
+  background: #7ccaf4;
+  margin: 0;
+  padding: 10px 0;
+}
+ul.item-list {
+  width: 100%;
+  list-style: none;
+  margin: 0;
+}
+ul.item-list li {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 10px;
+  background: #EFEFEF;
+}
+ul.item-list li div.container {
+  padding: 10px 10px 0;
+}
+ul.item-list li h3 {
+  margin: 0;
+}
+.red {
+  color: #da2020;
+}
+.tip-replacement-text {
+  float: left;
+  margin-top: 10px;
+}
+.item-list ul.tip-replacements {
+  display: inline-block;
+  margin-top: 10px;
+}
+.item-list ul.tip-replacements li {
+  display: block;
+}
