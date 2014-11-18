@@ -17,6 +17,8 @@
   text-align: center;
   padding: 5px 10px;
   background: #CDCDCD;
+  text-decoration: none;
+  color: #FFF;
 }
 .heading {
   width: 100%;
@@ -35,6 +37,7 @@ ul.item-list li {
   display: inline-block;
   margin-bottom: 10px;
   background: #EFEFEF;
+  overflow-x: hidden;
 }
 ul.item-list li div.container {
   padding: 10px 10px 0;

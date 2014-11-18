@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>Irregardless</title>
-  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" type="text/javascript"></script>
-  
-  <link href="../../Content/Office.css" rel="stylesheet" type="text/css" />
-  <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" type="text/javascript"></script>
-  
-  <link href="../App.css" rel="stylesheet" type="text/css" />
-  <script src="../App.js" type="text/javascript"></script>
-  
-  <link href="Home.css" rel="stylesheet" type="text/css" />
-  <script src="Display.js" type="text/javascript"></script>
-  <script src="Api.js" type="text/javascript"></script>
-  <script src="Stub.js" type="text/javascript"></script>
-  <script src="Home.js" type="text/javascript"></script>
-</head>
-<body>
-  <!-- Page content -->
-  <div id="content-main">
-    <div>
-      <select id="styleguide-select">
-        <option value="0">Select your Styleguide</option>
-      </select>
-      <div class="body-container">
-        <a href="javascript:void(0)" class="btn-fill">Refresh Suggestions</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Irregardless</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    
+    <link href="../../Content/Office.css" rel="stylesheet" type="text/css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" type="text/javascript"></script>
+    
+    <link href="../App.css" rel="stylesheet" type="text/css" />
+    <script src="../App.js" type="text/javascript"></script>
+    
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    <script src="Display.js" type="text/javascript"></script>
+    <script src="Api.js" type="text/javascript"></script>
+    <script src="Stub.js" type="text/javascript"></script>
+    <script src="Home.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <!-- Page content -->
+    <div id="content-main">
+      <div>
+        <select id="styleguide-select">
+          <option value="0">Select your Styleguide</option>
+        </select>
+        <div class="body-container">
+          <a href="javascript:void(0)" class="btn-fill" id="refresh-suggestions">Refresh Suggestions</a>
+        </div>
+        <h3 class="heading">Grammer Suggestions</h3>
+        <!--button id="read-body">Read Body</button-->
+        <ul class="item-list">
+        </ul>
       </div>
-      <h3 class="heading">Grammer Suggestions</h3>
-      <!--button id="read-body">Read Body</button-->
-      <ul class="item-list">
-      </ul>
     </div>
-  </div>
-</body>
+  </body>
 </html>

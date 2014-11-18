@@ -39,12 +39,11 @@
         type: 'POST',
         url: MATCH_ENDPOINT,
         success: function(resp, status, evt){
-      console.log(resp);
           App.Display.showTips(resp);
           return resp;
         },
         error: function(resp){
-      App.Display.showErrors(resp);
+          App.Display.showErrors(resp);
           return resp;
         },
         complete: function(){
