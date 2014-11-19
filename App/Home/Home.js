@@ -12,10 +12,10 @@
     $(document).ready(function () {
       app.initialize();
       FileAccessor.init();
-      App.Display.initContainers();
+      App.Display.initContainers(); 
       IGC.Api.getStyleguides(App.Display.showStyleguides);
 
-      interval = setInterval(App.getSuggestions, 30000);
+      interval = setInterval(App.getSuggestions, 10000);
     });
   };
 
@@ -74,6 +74,7 @@
     },
     displayFileResponse: function() {
       grabbingSuggestions = false;
+      App.Display.hideLoadingNotification();
       if(this.errors.length) {
         App.Display.showErrors(this.errors.join(' '));
       }
@@ -82,14 +83,15 @@
         this.text = this.currentText;
       }
     },
-  startProcessing: function() {
-      App.$items.prepend(App.Display.tipTemplate({ matched_string: 'Loading Matches', explanation: 'Please wait...' }))
-    grabbingSuggestions = true;
-  }
+    startProcessing: function() {
+      App.Display.showLoadingNotification();
+      
+      grabbingSuggestions = true;
+    }
   }
   
   function showResults(message) {
-  App.$items.html('');
+    App.$items.html('');
     IGC.Api.getTips(message, App.$select.val());
   }
 

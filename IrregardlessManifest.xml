@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Published:1edd050d-37f2-4edc-b53a-118283df4f1d-->
+<!--Created:cbbc9d22-5cf7-4e4c-8ee9-42a772aae58a-->
+<OfficeApp xsi:type="TaskPaneApp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/office/appforoffice/1.0">
+  <Id>2cc85b35-92cd-499f-a437-e39843ca1fcd</Id>
+  <Version>1.0.0.1</Version>
+  <ProviderName>[Provider name]</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Irregardless" />
+  <Description DefaultValue="Irregardless" />
+  <Capabilities>
+    <Capability Name="Workbook" />
+    <Capability Name="Project" />
+    <Capability Name="Document" />
+    <Capability Name="Presentation" />
+  </Capabilities>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="http://irregardless.ly/App/Home/Home.html" />
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+</OfficeApp>

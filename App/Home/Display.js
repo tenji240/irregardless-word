@@ -6,65 +6,53 @@
   window.IGC = window.IGC || {};
   window.App = window.App || {};
 
-  String.prototype.replaceAll = function(search, replace) {
-    return this.split(search).join(replace);
-  }
+  var HOST = "https://api.irregardless.ly/api/v1",
+      API_KEY = "5bqrrwh7a65cqh28ch9fn6aj",
+      MATCH_ENDPOINT = HOST + "/rules/match?api_key=" + API_KEY,
+      GUIDES_ENDPOINT = HOST + "/style_guides?api_key=" + API_KEY;
 
-  var Display = {
-    initContainers: function(){
-      App.$items = $('.item-list');
-      App.$select = $('#styleguide-select');
-      App.$refreshSuggestions = $('#refresh-suggestions');
-      App.$select.on('change', App.forceGrabSuggestions);
-      App.$refreshSuggestions.on('click', App.forceGrabSuggestions);
-    },
-    tipTemplate: function(tip) {
-      var str = '<li><div class="container"><h3>' + tip.matched_string + '</h3>';
-
-      if(tip.replacements && tip.replacements.length) {
-        var replacements = tip.replacements;
-        str += '<div><span class="tip-replacement-text">Replace with: </span><ul class="tip-replacements">';
-        for(var replacement in replacements) {
-          str += '<li>' + replacements[replacement] + '</li>';
+  var Api = {
+    getStyleguides: function(success){
+      $.ajax({
+        type: 'GET',
+        contentType: 'application/json',
+        url: GUIDES_ENDPOINT,
+        dataType: 'json',
+        success: function(resp){
+          success(resp);
         }
-        str += '</ul></div>';
+      });
+    },
+    getTips: function(text, collectionId){
+      if(!text.length || !collectionId || collectionId === 0) return;
+      
+      var data = { body: text };
+      
+      if(collectionId){
+        data.style_guide_id = collectionId;
       }
 
-      str += '<p>' + tip.explanation + '</p></div></li>';
-      return str;
-    },
-    styleguideTemplate: function(styleguide){
-      return '<option value="' + styleguide.id + '">' + styleguide.name + '</option>';
-    },
-    showTips: function(response) {
-      App.$items.html('');
-
-      for(var tipIndex in response) {
-        App.$items.append(Display.tipTemplate(response[tipIndex]));
-      }
-
-      if(response.length === 0) {
-        App.$items.html(Display.tipTemplate('No improvements necessary', ''));
-      }
-    },
-    showStyleguides: function(styleguides) {
-      var selected = App.$select.val() || 0;
-      App.$select.html(Display.styleguideTemplate({ id: 0, name: 'Select a styleguide' }));
-
-      for(var guideIndex in styleguides) {
-        App.$select.append(Display.styleguideTemplate(styleguides[guideIndex]));
-      }
-
-      App.$select.val(selected);
-    },
-    showMessageBody: function(message) {
-      console.log(message);
-    },
-    showErrors: function(message) {
-        console.log(message);
+      $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        type: 'POST',
+        url: MATCH_ENDPOINT,
+        success: function(resp, status, evt){
+          App.Display.showTips(resp);
+          return resp;
+        },
+        error: function(resp){
+          App.Display.showErrors(resp);
+          return resp;
+        },
+        complete: function(){
+          console.log('response complete');
+        }
+      });
     }
   };
 
-  App.Display = Display;
+  IGC.Api = Api;
 
 })(jQuery);
