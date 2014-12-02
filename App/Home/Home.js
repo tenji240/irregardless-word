@@ -5,7 +5,7 @@
   'use strict';
   window.IGC = window.IGC || {};
   window.App = window.App || {};
-  
+  App.baseUrl = 'http://irregardless.ly/';
   var interval = null, grabbingSuggestions = false;
   // The initialize function must be run each time a new page is loaded
   Office.initialize = function (reason) {
