@@ -3,7 +3,7 @@
 <!--Created:cbbc9d22-5cf7-4e4c-8ee9-42a772aae58a-->
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TaskPaneApp">
   <Id>2cc85b35-92cd-499f-a437-e39843ca1fcd</Id>
-  <Version>1.0.0.5</Version>
+  <Version>1.0.0.6</Version>
   <ProviderName>Must Win LLC</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Irregardless" />
