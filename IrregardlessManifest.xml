@@ -8,20 +8,19 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Irregardless" />
   <Description DefaultValue="Irregardless" />
-  <IconUrl DefaultValue="https://api.irregardless.ly/word-app/Images/icon.png?api_key=enzw7vddsvtejwfhkyvtcncf" />
   <Hosts>
     <Host Name="Document"/>
   </Hosts>
   <Capabilities>
-    <Capability Name="Workbook" />
-    <Capability Name="Project" />
     <Capability Name="Document" />
-    <Capability Name="Presentation" />
   </Capabilities>
+  <IconUrl DefaultValue="https://api.irregardless.ly/word-app/Images/icon.png?api_key=enzw7vddsvtejwfhkyvtcncf" />
+  <AppDomains>
+    <AppDomain>http://irregardless.ly/</AppDomain>
+  </AppDomains>
+  <SupportUrl DefaultValue="http://irregardless.ly/"></SupportUrl> 
   <DefaultSettings>
     <SourceLocation DefaultValue="https://api.irregardless.ly/word-app/App/Home/Home.html?api_key=enzw7vddsvtejwfhkyvtcncf" />
-
-    <SupportUrl DefaultValue="http://irregardless.ly/"></SupportUrl> 
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
 </OfficeApp>
