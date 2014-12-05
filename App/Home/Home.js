@@ -5,29 +5,41 @@
   'use strict';
   window.IGC = window.IGC || {};
   window.App = window.App || {};
-  App.baseUrl = 'http://irregardless.ly/';
+  window.Debug = window.Debug || {};
+  window.App.baseUrl = 'http://irregardless.ly/';
+  window.Debug.debugging = true;
   var interval = null, grabbingSuggestions = false;
   // The initialize function must be run each time a new page is loaded
-  Office.initialize = function (reason) {
+  var ready = function(reason) {
     $(document).ready(function () {
+
       app.initialize();
       FileAccessor.init();
-      App.Display.initContainers(); 
-      IGC.Api.getStyleguides(App.Display.showStyleguides);
+      window.App.Display.initContainers(); 
+      window.IGC.Api.getStyleguides(window.App.Display.showStyleguides);
 
-      interval = setInterval(App.getSuggestions, 10000);
+      interval = setInterval(window.App.getSuggestions, 10000);
+      Debug.showMessage('Properly initialized application');
     });
+  }
+
+  Office.initialize = function (reason) {
+    ready(reason);
   };
 
-  App.getSuggestions = function(){
-    if(!grabbingSuggestions) {
+  window.App.getSuggestions = function(){
+    if(Debug.debugging) {
+      window.App.Stub.forceGrabSuggestions();
+    } else if(!grabbingSuggestions) {
       FileAccessor.startProcessing();
       FileAccessor.getText();
     }
   }
   
-  App.forceGrabSuggestions = function() {
-    if(!grabbingSuggestions) {
+  window.App.forceGrabSuggestions = function() {
+    if(Debug.debugging) {
+      window.App.Stub.forceGrabSuggestions();
+    } else if(!grabbingSuggestions) {
       FileAccessor.startProcessing();
       FileAccessor.text = '';
       FileAccessor.getText();
@@ -62,7 +74,7 @@
         FileAccessor.errors.push(response.error.message);
     },
     parseSliceResponse: function(response) {
-      if (response.status == 'succeeded') {
+      if (response.status === 'succeeded') {
         FileAccessor.currentText += response.value.data;
       }
       else {
@@ -74,9 +86,9 @@
     },
     displayFileResponse: function() {
       grabbingSuggestions = false;
-      App.Display.hideLoadingNotification();
+      window.App.Display.hideLoadingNotification();
       if(this.errors.length) {
-        App.Display.showErrors(this.errors.join(' '));
+        window.App.Display.showErrors(this.errors.join(' '));
       }
       else if(this.currentText != this.text) {
         showResults(this.currentText);
@@ -84,15 +96,17 @@
       }
     },
     startProcessing: function() {
-      App.Display.showLoadingNotification();
+      window.App.Display.showLoadingNotification();
       
       grabbingSuggestions = true;
     }
   }
   
-  function showResults(message) {
-    App.$items.html('');
-    IGC.Api.getTips(message, App.$select.val());
+  var showResults = function(message) {
+    window.App.$items.html('');
+    window.IGC.Api.getTips(message, window.App.$select.val());
   }
+
+  ready();
 
 })();

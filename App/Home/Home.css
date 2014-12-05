@@ -59,3 +59,9 @@ ul.item-list li h3 {
 .item-list ul.tip-replacements li {
   display: block;
 }
+#goto-styleguide {
+  background: #7ccaf4;
+}
+.hidden { 
+  display: none;
+}

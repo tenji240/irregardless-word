@@ -5,6 +5,7 @@
 
   window.IGC = window.IGC || {};
   window.App = window.App || {};
+  window.Debug = window.Debug || {};
 
   var HOST = "https://api.irregardless.ly/api/v1",
       API_KEY = "5bqrrwh7a65cqh28ch9fn6aj",
@@ -13,6 +14,9 @@
 
   var Api = {
     getStyleguides: function(success){
+      if(Debug.debugging) {
+        return success(App.Stub.styleguides);
+      }
       $.ajax({
         type: 'GET',
         contentType: 'application/json',
@@ -20,12 +24,17 @@
         dataType: 'json',
         success: function(resp){
           success(resp);
+        },
+        error: function(a, b, c) {
+          Debug.showMessage('Error grabbing styleguides');
         }
       });
     },
     getTips: function(text, collectionId){
       if(!text.length || !collectionId || collectionId === 0) return;
-      
+      if(Debug.debugging) {
+        return App.Display.showTips(App.Stub.tips);
+      }
       var data = { body: text };
       
       if(collectionId){

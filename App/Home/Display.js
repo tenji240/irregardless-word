@@ -5,7 +5,8 @@
 
   window.IGC = window.IGC || {};
   window.App = window.App || {};
-
+  window.Debug = window.Debug || {};
+ 
   String.prototype.replaceAll = function(search, replace) {
     return this.split(search).join(replace);
   }
@@ -14,14 +15,18 @@
     initContainers: function(){
       App.$items = $('.item-list');
       App.$select = $('#styleguide-select');
+      App.$styleguideBtn = $('#goto-styleguide');
       App.$refreshSuggestions = $('#refresh-suggestions');
-      App.$select.on('change', App.forceGrabSuggestions);
+      App.$select.on('change', function() {
+        App.forceGrabSuggestions();
+        Display.showStyleguide($(this).val());
+      });
       App.$refreshSuggestions.on('click', App.forceGrabSuggestions);
     },
     showLoadingNotification: function() {
       if($('#loading-notification').length === 0) {
         var template = '<li id="loading-notification"><div class="container"><h3>Loading Matches</h3>' +
-                             '<p>Please wait...</p></div></li>';
+                         '<p>Please wait...</p></div></li>';
         App.$items.prepend(template);
       }
     },
@@ -31,9 +36,14 @@
       }
     },
     tipTemplate: function(tip) {
-      var str = '<li><div class="container"><h3>' + 
-                  '<a href="' + App.baseUrl + '#!/tip/"' + tip.id + ' target="_blank" class="more-link"> more</a>' +
-                  tip.matched_string + '</h3>';
+      var str = '<li><div class="container">';
+
+      if(tip.id) {
+        str += '<h3><a href="' + App.baseUrl + '#!/tip/' + tip.id + '" target="_blank" class="more-link">' +
+          tip.matched_string + '</a></h3>';
+      } else {
+        str += '<h3>' + tip.matched_string + '</h3>';
+      }
 
       if(tip.replacements && tip.replacements.length) {
         var replacements = tip.replacements;
@@ -58,7 +68,8 @@
       }
 
       if(response.length === 0) {
-        App.$items.html(Display.tipTemplate('No improvements necessary', ''));
+        App.$items.html(Display.tipTemplate({ id: null, matched_string: 'No improvements necessary',
+                                              explanation: '' }));
       }
     },
     showStyleguides: function(styleguides) {
@@ -71,14 +82,25 @@
 
       App.$select.val(selected);
     },
+    showStyleguide: function(styleguideId) {
+      var url = 'javascript:void(0)';
+      if(styleguideId == 0) {
+        App.$styleguideBtn.addClass('hidden');
+      } else {
+        url = App.baseUrl + '#!/style_guides/' + styleguideId;
+        App.$styleguideBtn.removeClass('hidden');
+      }
+      App.$styleguideBtn.attr('href', url);
+    },
     showMessageBody: function(message) {
       console.log(message);
     },
     showErrors: function(message) {
-        console.log(message);
+      Debug.showMessage(message);
+      console.log(message);
     }
   };
 
-  App.Display = Display;
+  window.App.Display = Display;
 
 })(jQuery);
