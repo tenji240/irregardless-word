@@ -47,24 +47,16 @@
   }
 
   window.App.setStyleguideState = function(value) {
-    if(Debug.debugging) {
-      Debug.showMessage('Setting styleguide state to: ' + value);
-    } else {
-      Office.context.document.settings.set('styleguide', value);
-      Office.context.document.settings.saveAsync(function(asyncResult) {
-        console.log(asyncResult);
-      });
-    }
+    Debug.showMessage('Setting styleguide state to: ' + value);
+    localStorage.styleguide = value;
   }
 
   window.App.getStyleguideState = function() {
-    var defaultStyleguide = 0;
-    if(Debug.debugging) {
-      Debug.showMessage('Got styleguide state: ' + defaultStyleguide);
-      return defaultStyleguide;
-    } else {
-      return Office.context.document.settings.get('styleguide') || defaultStyleguide;
-    }
+    var defaultStyleguide = window.App.$select.val() || 0;
+    if(defaultStyleguide != 0) return defaultStyleguide;
+
+    Debug.showMessage('Got styleguide state: ' + defaultStyleguide);
+    return localStorage.styleguide || defaultStyleguide;
   }
 
   var FileAccessor = {

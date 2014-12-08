@@ -18,8 +18,11 @@
       App.$styleguideBtn = $('#goto-styleguide');
       App.$refreshSuggestions = $('#refresh-suggestions');
       App.$select.on('change', function() {
+        var value = $(this).val();
         App.forceGrabSuggestions();
-        Display.showStyleguide($(this).val());
+        Display.showStyleguide(value);
+        App.setStyleguideState(value);
+        console.log('VALUE CHANGED');
       });
       App.$refreshSuggestions.on('click', App.forceGrabSuggestions);
     },
@@ -73,7 +76,7 @@
       }
     },
     showStyleguides: function(styleguides) {
-      var selected = App.$select.val() || App.$select.getStyleguideState();
+      var selected = App.getStyleguideState();
       App.$select.html(Display.styleguideTemplate({ id: 0, name: 'Select a styleguide' }));
 
       for(var guideIndex in styleguides) {
