@@ -73,7 +73,7 @@
       }
     },
     showStyleguides: function(styleguides) {
-      var selected = App.$select.val() || 0;
+      var selected = App.$select.val() || App.$select.getStyleguideState();
       App.$select.html(Display.styleguideTemplate({ id: 0, name: 'Select a styleguide' }));
 
       for(var guideIndex in styleguides) {

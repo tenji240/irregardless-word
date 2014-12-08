@@ -7,7 +7,7 @@
   window.App = window.App || {};
   window.Debug = window.Debug || {};
   window.App.baseUrl = 'http://irregardless.ly/';
-  window.Debug.debugging = true;
+
   var interval = null, grabbingSuggestions = false;
   // The initialize function must be run each time a new page is loaded
   var ready = function(reason) {
@@ -46,6 +46,27 @@
     }
   }
 
+  window.App.setStyleguideState = function(value) {
+    if(Debug.debugging) {
+      Debug.showMessage('Setting styleguide state to: ' + value);
+    } else {
+      Office.context.document.settings.set('styleguide', value);
+      Office.context.document.settings.saveAsync(function(asyncResult) {
+        console.log(asyncResult);
+      });
+    }
+  }
+
+  window.App.getStyleguideState = function() {
+    var defaultStyleguide = 0;
+    if(Debug.debugging) {
+      Debug.showMessage('Got styleguide state: ' + defaultStyleguide);
+      return defaultStyleguide;
+    } else {
+      return Office.context.document.settings.get('styleguide') || defaultStyleguide;
+    }
+  }
+
   var FileAccessor = {
     init: function() {
       this.text = '';
@@ -53,6 +74,7 @@
       this.errors = []; 
     },
     getText: function() {
+      if(Debug.debugging) return '';
       var self = this;
       Office.context.document.getFileAsync(Office.FileType.Text, {}, self.parseFileResponse);
     },
@@ -96,7 +118,7 @@
       }
     },
     startProcessing: function() {
-      window.App.Display.showLoadingNotification();
+      //window.App.Display.showLoadingNotification();
       
       grabbingSuggestions = true;
     }

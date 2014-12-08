@@ -21,9 +21,9 @@
   }
   
   var Debug = {
-    debugging: true,
+    debugging: false,
     showMessage: function(msg) {
-      if(true) return;
+      if(!Debug.debugging) return;
       Debug.removeDebugNotification();
       var template = '<li id="debug-notification"><div class="container"><h3>Debug Warning</h3>' +
                              '<p>' + msg + '</p></div></li>';
