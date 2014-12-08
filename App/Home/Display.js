@@ -22,7 +22,6 @@
         App.forceGrabSuggestions();
         Display.showStyleguide(value);
         App.setStyleguideState(value);
-        console.log('VALUE CHANGED');
       });
       App.$refreshSuggestions.on('click', App.forceGrabSuggestions);
     },

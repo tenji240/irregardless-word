@@ -110,8 +110,6 @@
       }
     },
     startProcessing: function() {
-      //window.App.Display.showLoadingNotification();
-      
       grabbingSuggestions = true;
     }
   }
