@@ -1,43 +1,80 @@
-/* Page-specific styling */
-
-/* Formatting for the sample buttons */
-
+/* BASIC UI */
+#content-main {
+  position: fixed;
+  top: 0; /* Same value as #content-header's height */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto; /* Enable scrollbars within main content section */
+  background: url('http://i.imgur.com/My25UMR.png');
+}
+.footer,
 .body-container {
-  background: #EFEFEF;
-}
-#message-body {
-  padding: 10px;
-  margin: 0;
-}
-#styleguide-select {
-  width: 100%;
-}
-.btn-fill {
-  display: block;
+  background: #3489CF;
   text-align: center;
-  padding: 5px 10px;
-  background: #CDCDCD;
-  text-decoration: none;
-  color: #FFF;
-}
-.heading {
-  width: 100%;
-  text-align: center;
-  background: #7ccaf4;
-  margin: 0;
   padding: 10px 0;
 }
-ul.item-list {
+.footer {
+  position: fixed;
   width: 100%;
+  bottom: 0;
+  z-index: 2;
+  background-color: #3489CF;
+  padding: 10px 0;
+  border-top: 1px solid #aaa;
+  color: white;
+}
+.footer a {
+  color: white;
+}
+.footer a:hover {
+  text-decoration: none;
+}
+.logo {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* GLOBAL STYLES */
+
+.btn-fill {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 0 4px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid white;
+  border-radius: 4px;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid #dcdcdc;
+  color: white;
+}
+.hidden { 
+  display: none;
+}
+.underlined {
+  text-decoration: underline;
+}
+.padding {
+  padding: 15px;
+}
+/* TIP LIST */
+
+ul.item-list {
   list-style: none;
   margin: 0;
+  margin-bottom: 32px;
 }
 ul.item-list li {
   width: 100%;
   display: inline-block;
-  margin-bottom: 10px;
-  background: #EFEFEF;
-  overflow-x: hidden;
+  background: white;
+}
+.inner-tip-class {
+  padding: 20px;
 }
 ul.item-list li div.container {
   padding: 10px 10px 0;
@@ -45,23 +82,219 @@ ul.item-list li div.container {
 ul.item-list li h3 {
   margin: 0;
 }
-.red {
-  color: #da2020;
+.no-results {
+  font-weight: 100;
+  margin: 0;
+}
+
+/* TIP STYLES */
+.tip-container {
+  position: relative;
+  border-bottom: 5px solid #dcdcdc;
+  padding-bottom: 50px;
+  background: white;
+  -moz-box-shadow: inset 0 2px 0 rgba(0,0,0,.05);
+  -webkit-box-shadow: inset 0 2px 0 rgba(0,0,0,.05);
+  -o-box-shadow: inset 0 2px 0 rgba(0,0,0,.05);
+  -ms-box-shadow: inset 0 2px 0 rgba(0,0,0,.05);
+  box-shadow: inset 0 2px 0 rgba(0,0,0,.05);
+}
+.tip-container:hover .close-tip {
+  display: block;
+}
+.tip-container:hover .tip-border {
+  border-color: transparent;
+}
+.tip {
+  margin-top: 5px;
+}
+.tip-header {
+  color: #776d6d;
+  margin: 0;
+}
+.creator {
+  position: absolute;
+  left: 1px;
+  bottom: 0;
+  padding: 0;
+}
+.creator img {
+  width: 35px;
+  height: 35px;
+  -moz-box-shadow: -1px 1px 1px rgba(0 , 0 , 0 , 0.3);
+  -webkit-box-shadow: -1px 1px 1px rgba(0 , 0 , 0 , 0.3);
+  -o-box-shadow: -1px 1px 1px rgba(0 , 0 , 0 , 0.3);
+  -ms-box-shadow: -1px 1px 1px rgba(0 , 0 , 0 , 0.3);
+  box-shadow: -1px 1px 1px rgba(0 , 0 , 0 , 0.3);
+  position: relative;
+  top: 2px; 
+}
+.creator img,
+.contributor-desc {
+  display: inline-block;
+  color: #776D6D;
+}
+.contributor-desc {
+  position: relative;
+  bottom: 3px;
+  left: 6px;
+  text-align: left;
+}
+.tip-border {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  margin-left: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 0;
+  border-color: transparent #AF3434  transparent transparent;
+}
+.close-tip {
+  color: #888;
+  position: absolute;
+  top: 2px;
+  right: -6px;
+  display: none;
 }
 .tip-replacement-text {
   float: left;
   margin-top: 10px;
 }
-.item-list ul.tip-replacements {
-  display: inline-block;
+.replacements {
   margin-top: 10px;
+  text-align:left;
+  color: #AF3434;
 }
-.item-list ul.tip-replacements li {
-  display: block;
+.replacements-label {
+  color: #AF3434;
+  display: inline-block;
+  margin-bottom: 5px;
+  text-transform: uppercase;
 }
-#goto-styleguide {
-  background: #7ccaf4;
+.replacements ul {
+  color: #464141;
+  list-style: none;
+  padding-left: 0;
 }
-.hidden { 
-  display: none;
+.replacements li {
+  position: relative;
+  padding-left: 10px;
+}
+.replacements li:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: "• ";
+  color: #AF3434;
+  -moz-box-shadow: 0 1px 0 rgba(255,255,255,.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.3);
+  -o-box-shadow: 0 1px 0 rgba(255,255,255,.3);
+  -ms-box-shadow: 0 1px 0 rgba(255,255,255,.3);
+  box-shadow: 0 1px 0 rgba(255,255,255,.3);
+}
+.explanation {
+  text-align: left;
+  padding: 10px 0;
+  color: #776D6D;
+  font-size: 14px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/* SETTINGS */
+
+.settings {
+  margin-bottom: 12px;
+  overflow: hidden;
+  border-bottom: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+  background: url('http://i.imgur.com/My25UMR.png');
+  -moz-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  
+}
+#settings-container {
+  margin: 0 auto;
+  padding: 0 10px 0 15px;
+}
+.settings.showing {
+  opacity: 1;
+}
+.settings-trigger {
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  font-size: 40px;
+  top: 0;
+  right: 10px;
+}
+.settings-trigger:hover {
+  text-decoration: none;
+}
+.autorun-checkbox {
+  padding: 10px;
+}
+.help-icon {
+  display: inline-block;
+  color: #777;
+  font-weight: bold;
+  padding: 0 4px;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  top: 3px;
+}
+.help-icon img {
+  width: 15px;
+}
+.styleguide-explanation {
+  padding: 10px;
+  margin: 0 10px;
+  color: #888;
+}
+#styleguide-query-input {
+  margin: 00;
+  width: 100%;
+  padding: 10px;
+  height: 30px;
+  border: 1px solid #dcdcdc;
+}
+.styleguide-list {
+  list-style: none;
+  text-align: left;
+  cursor: pointer;
+  color: #6d6d6d;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 50px;
+  width: 100%;
+  overflow: auto;
+}
+.styleguide-list > li {
+  position: relative;
+  padding: 10px 20px 10px 10px;
+  background: white;
+  border: 1px solid #dcdcdc;
+  border-top: none;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+.styleguide-list > li.chosen-guide {
+  background: #3489CF;
+  color: white;
+}
+.styleguide-list > li.chosen-guide .check {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.styleguide-list > li:hover {
+  background: #efefef;
+  color: #000000;
 }

@@ -6,10 +6,19 @@
   window.IGC = window.IGC || {};
   window.App = window.App || {};
   window.Debug = window.Debug || {};
- 
+  var cachedStyleguides = [];
+
   String.prototype.replaceAll = function(search, replace) {
     return this.split(search).join(replace);
   }
+
+  var throttle = (function(){
+    var timer = 0;
+    return function(callback, ms){
+      clearTimeout (timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
 
   var Display = {
     initContainers: function(){
@@ -17,12 +26,53 @@
       App.$select = $('#styleguide-select');
       App.$styleguideBtn = $('#goto-styleguide');
       App.$refreshSuggestions = $('#refresh-suggestions');
-      App.$select.on('change', function() {
-        var value = $(this).val();
+      App.$settingsTrigger = $('#settings-trigger');
+      App.$homeTrigger = $('#trigger-home');
+      App.$settingsTab = $('[data-settings-tab]');
+      App.$resultsTab = $('[data-results-tab]');
+      App.$styleguideQuery = $('#styleguide-query-input')
+      App.$autoRun = $('#toggle-autorun');
+      App.$toolTips = $('[data-tool-tip]');
+
+      App.$toolTips.tipr();
+
+      App.$autoRun.prop('checked', localStorage.autoRun === "true");
+      App.$autoRun.on('change', function() {
+        localStorage.autoRun = !(localStorage.autoRun === "true");
+        App.toggleAutoRun();
+      });
+
+      App.$select.on('click', 'li', function() {
+        var value = $(this).data('save-guide-id');
         App.forceGrabSuggestions();
         Display.showStyleguide(value);
         App.setStyleguideState(value);
+        Display.showStyleguides(cachedStyleguides);
       });
+
+      App.$settingsTrigger.on('click', function() {
+        App.$resultsTab.addClass('hidden');
+
+        setTimeout(function(){
+          App.$settingsTab.removeClass('hidden');
+        }, 100);
+      });
+
+      App.$homeTrigger.on('click', function() {
+        App.$settingsTab.addClass('hidden');
+
+        setTimeout(function(){
+          App.$resultsTab.removeClass('hidden');
+        }, 100);
+      });
+
+      App.$styleguideQuery.on('keyup', function() {
+        throttle(function(){
+          IGC.Api.getStyleguides(window.App.Display.showStyleguides, App.$styleguideQuery.val());
+        }, 1000 );
+      });
+
+      Display.showStyleguide(localStorage.styleguide)
       App.$refreshSuggestions.on('click', App.forceGrabSuggestions);
     },
     showLoadingNotification: function() {
@@ -37,59 +87,47 @@
         $('#loading-notification').remove();
       }
     },
-    tipTemplate: function(tip) {
-      var str = '<li><div class="container">';
-
-      if(tip.id) {
-        str += '<h3><a href="' + App.baseUrl + '#!/tip/' + tip.id + '" target="_blank" class="more-link">' +
-          tip.matched_string + '</a></h3>';
-      } else {
-        str += '<h3>' + tip.matched_string + '</h3>';
-      }
-
-      if(tip.replacements && tip.replacements.length) {
-        var replacements = tip.replacements;
-        str += '<div><span class="tip-replacement-text">Replace with: </span><ul class="tip-replacements">';
-        for(var replacement in replacements) {
-          str += '<li>' + replacements[replacement] + '</li>';
-        }
-        str += '</ul></div>';
-      }
-
-      str += '<p>' + tip.explanation + '</p></div></li>';
-      return str;
-    },
     styleguideTemplate: function(styleguide){
-      return '<option value="' + styleguide.id + '">' + styleguide.name + '</option>';
+      var classes = '',
+          span = '';
+      if(parseInt(styleguide.id) === parseInt(App.getStyleguideState())) {
+        classes += 'chosen-guide';
+        span = '<span class="check">&#x2713;</span>'
+      }
+
+      return '<li class="' + classes + '" data-save-guide-name="' + styleguide.name +
+              '" data-save-guide-id=' + styleguide.id + '>' +
+                      styleguide.name + span + 
+              "</li>";
     },
     showTips: function(response) {
       App.$items.html('');
 
       for(var tipIndex in response) {
-        App.$items.append(Display.tipTemplate(response[tipIndex]));
+        App.$items.append(new App.Tip(response[tipIndex]).render());
       }
 
       if(response.length === 0) {
-        App.$items.html(Display.tipTemplate({ id: null, matched_string: 'No improvements necessary',
-                                              explanation: '' }));
+        App.$items.html(new App.Tip({  matched_string: '<h2 class="no-results">No results, you have quite the way with words!</h2>' }).fillerMessage());
       }
     },
     showStyleguides: function(styleguides) {
+      cachedStyleguides = styleguides;
+
       var selected = App.getStyleguideState();
-      App.$select.html(Display.styleguideTemplate({ id: 0, name: 'Select a styleguide' }));
+      App.$select.html('');
 
       for(var guideIndex in styleguides) {
         App.$select.append(Display.styleguideTemplate(styleguides[guideIndex]));
       }
-
-      App.$select.val(selected);
     },
     showStyleguide: function(styleguideId) {
+
       var url = 'javascript:void(0)';
       if(styleguideId == 0) {
         App.$styleguideBtn.addClass('hidden');
       } else {
-        url = App.baseUrl + '#!/style_guides/' + styleguideId;
+        url = App.baseUrl + 'style_guides/' + styleguideId;
         App.$styleguideBtn.removeClass('hidden');
       }
       App.$styleguideBtn.attr('href', url);

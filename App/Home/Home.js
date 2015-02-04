@@ -13,12 +13,12 @@
   var ready = function(reason) {
     $(document).ready(function () {
 
-      app.initialize();
       FileAccessor.init();
       window.App.Display.initContainers(); 
       window.IGC.Api.getStyleguides(window.App.Display.showStyleguides);
 
-      interval = setInterval(window.App.getSuggestions, 10000);
+      
+      window.App.toggleAutoRun();
       Debug.showMessage('Properly initialized application');
     });
   }
@@ -52,11 +52,19 @@
   }
 
   window.App.getStyleguideState = function() {
-    var defaultStyleguide = window.App.$select.val() || 0;
+    var defaultStyleguide = $('.chosen-guide').data('save-guide-id') || 0;
     if(defaultStyleguide != 0) return defaultStyleguide;
 
     Debug.showMessage('Got styleguide state: ' + defaultStyleguide);
     return localStorage.styleguide || defaultStyleguide;
+  }
+
+  window.App.toggleAutoRun = function() {
+    if(localStorage.autoRun === 'true') {
+      interval = setInterval(window.App.getSuggestions, 30000);
+    } else if(interval) {
+      clearInterval(interval);
+    }
   }
 
   var FileAccessor = {
@@ -116,7 +124,7 @@
   
   var showResults = function(message) {
     window.App.$items.html('');
-    window.IGC.Api.getTips(message, window.App.$select.val());
+    window.IGC.Api.getTips(message, localStorage.styleguide);
   }
 
   ready();

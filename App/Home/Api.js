@@ -13,14 +13,16 @@
       GUIDES_ENDPOINT = HOST + "/style_guides?api_key=" + API_KEY;
 
   var Api = {
-    getStyleguides: function(success){
+    getStyleguides: function(success, query){
       if(Debug.debugging) {
         return success(App.Stub.styleguides);
       }
+      var endpoint = query ? (GUIDES_ENDPOINT + '&q=' + query) : GUIDES_ENDPOINT;
+
       $.ajax({
         type: 'GET',
         contentType: 'application/json',
-        url: GUIDES_ENDPOINT,
+        url: endpoint,
         dataType: 'json',
         success: function(resp){
           success(resp);
@@ -48,6 +50,7 @@
         type: 'POST',
         url: MATCH_ENDPOINT,
         success: function(resp, status, evt){
+          console.log(resp);
           App.Display.showTips(resp);
           return resp;
         },

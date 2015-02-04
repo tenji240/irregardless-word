@@ -8,35 +8,57 @@
     
     <link href="../../Content/Office.css?api_key=enzw7vddsvtejwfhkyvtcncf" rel="stylesheet" type="text/css" />
     <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" type="text/javascript"></script>
-    
-    <link href="../App.css?api_key=enzw7vddsvtejwfhkyvtcncf" rel="stylesheet" type="text/css" />
-    <script src="../App.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
-    
     <link href="Home.css?api_key=enzw7vddsvtejwfhkyvtcncf" rel="stylesheet" type="text/css" />
+    <link href="Tipr.css?api_key=enzw7vddsvtejwfhkyvtcncf" rel="stylesheet" type="text/css" />
+    <script src="Tipr.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
     <script src="Display.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
     <script src="Api.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
     <script src="Stub.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
     <script src="Home.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
+    <script src="Tip.js?api_key=enzw7vddsvtejwfhkyvtcncf" type="text/javascript"></script>
   </head>
   <body>
     <!-- Page content -->
     <div id="content-main">
-      <div>
-        <select id="styleguide-select">
-          <option value="0">Select your Styleguide</option>
-        </select>
+      <div class="content-banner">
         <div class="body-container">
-          <a href="javascript:void(0)" class="btn-fill hidden" id="goto-styleguide"
-               id="goto-styleguide" target="_blank">Go to Styleguide</a>
-          <a href="javascript:void(0)" class="btn-fill" id="refresh-suggestions">Refresh Suggestions</a>
+          <div data-results-tab>
+            <a href="javascript:void(0)" class="btn-fill hidden" id="goto-styleguide"
+                 id="goto-styleguide" target="_blank">See Guide</a>
+            <a href="javascript:void(0)" class="btn-fill" id="refresh-suggestions">Get Tips</a>
+            <a id="settings-trigger" class="settings-trigger">
+              &#x2699;
+            </a>
+          </div>
+          <div data-settings-tab class="hidden">
+            <a href="javascript:void(0)" class="btn-fill" id="trigger-home" target="_blank">Home</a>
+          </div>
         </div>
-        <h3 class="heading">Grammar Suggestions</h3>
-        <!--button id="read-body">Read Body</button-->
-        <ul class="item-list">
-        </ul>
+        <div id="settings-container" class="settings hidden" data-settings-tab>
+          <div class="autorun-checkbox">
+            <input type="checkbox" id="toggle-autorun" name="autorun"/> <label for="autorun">Enable Auto-run</label>
+            <div class="help-icon" data-tool-tip="With autorun, Irregardless.ly will automatically check your writing every 30 seconds.">
+              <img src="http://irregardless.ly/assets/questionmark-in-circle-icon.png"/>
+            </div>
+          </div>
+          <div class="styleguide-settings">
+            <div class="styleguide-explanation">
+              Choose a style guide to test your writing against.
+            </div>
+            <div class="styleguide-search">
+              <input type="text" id="styleguide-query-input" placeholder="Search for a styleguide" />
+            </div>
+            <ul id="styleguide-select" class="styleguide-list">
+            </ul>
+          </div>
+        </div>
+        <div class="results-container" data-results-tab>
+          <ul class="item-list" data-results-tab></ul>
+        </div>
         <div class="footer">
-          <a href="http://irregardless.ly/" class="btn-fill" id="irregardless-btn" target="_blank">
-            irregardless.ly
+          <a href="http://irregardless.ly/" id="irregardless-btn" target="_blank">
+            <img class="logo" widht="27" height="27" src="http://irregardless.ly/word-app/Images/icon.png?api_key=enzw7vddsvtejwfhkyvtcncf" />Writing tips by
+            <span class="underlined">irregardless.ly</span>
           </a>
         </div>
       </div>
