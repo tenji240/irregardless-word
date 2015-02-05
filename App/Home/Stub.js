@@ -8,7 +8,7 @@
  
   var Stub = {
     message: "We should sit down with a googler about this trivial issue.",
-    tips: [{ id: 281, index: 0, replacements: [], match_string: 'we', matched_string: 'we', explanation: 'As in “We now know the fatality ratio of the current H1N1 influenza epidemic.” In the context of an article, "we" includes not just you and other H1N1 experts, but also your readers, most of whom don’t know this fact–yet.',
+    ztips: [{ id: 281, index: 0, replacements: [], match_string: 'we', matched_string: 'we', explanation: 'As in “We now know the fatality ratio of the current H1N1 influenza epidemic.” In the context of an article, "we" includes not just you and other H1N1 experts, but also your readers, most of whom don’t know this fact–yet.',
              creator: { id: 137, mugshot_url: 'https://lh4.googleusercontent.com/-yiWZi-CtbuQ/AAAAAAAAAAI/AAAAAAAAE_I/Ib3Izp8nncA/photo.jpg',
                         name: 'Carl Zimmer' } },
              { id: 366, index: 10, replacements: [], match_string: 'sit down with', matched_string: 'sit down with', explanation: '"sit down with" often used to meen "meet with"; for example, "http://talkingpointsmemo.com/livewire/nbc-brian-williams-edward-snowden-glenn-greenwald". "Sit down with" could imply a variety of activities. Say "meet" or "interview".',
@@ -22,7 +22,7 @@
                     name: 'Carl Zimmer' } }],
     styleguides: [{ id: 1, name: 'Everything' }, { id: 2, name: 'Dosty\'s Guide' },
                   { id: 3, name: 'Redpen Tips' }, { id: 4, name: 'New School' }],
-    emptyTips: [],
+    tips: [],
 
     forceGrabSuggestions: function() {
       window.App.Display.showTips(Stub.tips);

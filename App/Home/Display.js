@@ -108,7 +108,7 @@
       }
 
       if(response.length === 0) {
-        App.$items.html(new App.Tip({  matched_string: '<h2 class="no-results">No results, you have quite the way with words!</h2>' }).fillerMessage());
+        App.$items.html(new App.Tip({  matched_string: '<h4 class="no-results">No results, you have quite the way with words!</h4>' }).fillerMessage());
       }
     },
     showStyleguides: function(styleguides) {
@@ -123,7 +123,7 @@
     },
     showStyleguide: function(styleguideId) {
 
-      var url = 'javascript:void(0)';
+      var url = '#';
       if(styleguideId == 0) {
         App.$styleguideBtn.addClass('hidden');
       } else {

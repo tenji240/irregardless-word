@@ -39,7 +39,8 @@
                         this.truncate(this.tip.explanation, 230) + this.replacementHtml() +
                       '</div>' +
                       '<div class="tip-border">' +
-                        '<a href="javascript:void(0)" data-tip-id="' + this.tip.id + '" class="close-tip">&times;</a>' +
+                        '<a href="' + App.baseUrl + 'tip/' + this.tip.id + '" data-tip-id="' + this.tip.id + 
+                         '" class="close-tip">&times;</a>' +
                       '</div>' +
                     '</div>' +
                   '</div>' +
