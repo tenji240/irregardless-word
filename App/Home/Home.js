@@ -2,7 +2,7 @@
 /*global app*/
 
 (function () {
-  'use strict';
+    'use strict';
 
     window.App = window.App || {};
     window.IGC = window.IGC || {};
@@ -34,7 +34,7 @@
                 styleguideManager.renderStyleguides(resp);
             });
         };
-
+    
     // The initialize function must be run each time a new page is loaded
     if (window.Office) {
         Office.initialize = function (reason) {
