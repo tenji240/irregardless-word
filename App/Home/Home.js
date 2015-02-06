@@ -3,130 +3,51 @@
 
 (function () {
   'use strict';
-  window.IGC = window.IGC || {};
-  window.App = window.App || {};
-  window.Debug = window.Debug || {};
-  window.App.baseUrl = 'http://irregardless.ly/';
 
-  var interval = null, grabbingSuggestions = false;
-  // The initialize function must be run each time a new page is loaded
-  var ready = function(reason) {
-    $(document).ready(function () {
-
-      FileAccessor.init();
-      window.App.Display.initContainers(); 
-      window.IGC.Api.getStyleguides(window.App.Display.showStyleguides);
-
-      
-      window.App.toggleAutoRun();
-      Debug.showMessage('Properly initialized application');
-    });
-  }
-
-  Office.initialize = function (reason) {
-    ready(reason);
-  };
-
-  window.App.getSuggestions = function(){
-    if(Debug.debugging) {
-      window.App.Stub.forceGrabSuggestions();
-    } else if(!grabbingSuggestions) {
-      FileAccessor.startProcessing();
-      FileAccessor.getText();
-    }
-  }
-  
-  window.App.forceGrabSuggestions = function() {
-    if(Debug.debugging) {
-      window.App.Stub.forceGrabSuggestions();
-    } else if(!grabbingSuggestions) {
-      FileAccessor.startProcessing();
-      FileAccessor.text = '';
-      FileAccessor.getText();
-    }
-  }
-
-  window.App.setStyleguideState = function(value) {
-    Debug.showMessage('Setting styleguide state to: ' + value);
-    localStorage.styleguide = value;
-  }
-
-  window.App.getStyleguideState = function() {
-    var defaultStyleguide = $('.chosen-guide').data('save-guide-id') || 0;
-    if(defaultStyleguide != 0) return defaultStyleguide;
-
-    Debug.showMessage('Got styleguide state: ' + defaultStyleguide);
-    return localStorage.styleguide || defaultStyleguide;
-  }
-
-  window.App.toggleAutoRun = function() {
-    if(localStorage.autoRun === 'true') {
-      interval = setInterval(window.App.getSuggestions, 30000);
-    } else if(interval) {
-      clearInterval(interval);
-    }
-  }
-
-  var FileAccessor = {
-    init: function() {
-      this.text = '';
-      this.currentText = '';
-      this.errors = []; 
-    },
-    getText: function() {
-      if(Debug.debugging) return '';
-      var self = this;
-      Office.context.document.getFileAsync(Office.FileType.Text, {}, self.parseFileResponse);
-    },
-    parseFileResponse: function(response) {
-      if(response.status === 'succeeded') {
-        // If the getFileAsync call succeeded, then
-        // result.value will return a valid File Object.
-        var myFile = response.value;
-        var slices = myFile.sliceCount;
-        FileAccessor.currentText = '';
-        FileAccessor.errors = [];
-        // Iterate over the file slices.
-        for (var i = 0; i < slices; i++) {
-          myFile.getSliceAsync(i, { isLast: (i === slices - 1) }, FileAccessor.parseSliceResponse);
+    window.App = window.App || {};
+    window.IGC = window.IGC || {};
+    window.App.baseUrl = 'http://irregardless.ly/';
+    window.debug = {
+        log: function (msg) {
+            console.log(msg);
+            //$('.debug-message').append(msg + '<br />');
         }
-        myFile.closeAsync(); 
-      }
-      else
-        FileAccessor.errors.push(response.error.message);
-    },
-    parseSliceResponse: function(response) {
-      if (response.status === 'succeeded') {
-        FileAccessor.currentText += response.value.data;
-      }
-      else {
-        FileAccessor.errors.push(response.error.message);
-      } 
-      if(!response.asyncContext || response.asyncContext.isLast) {
-        FileAccessor.displayFileResponse();
-      }
-    },
-    displayFileResponse: function() {
-      grabbingSuggestions = false;
-      window.App.Display.hideLoadingNotification();
-      if(this.errors.length) {
-        window.App.Display.showErrors(this.errors.join(' '));
-      }
-      else if(this.currentText != this.text) {
-        showResults(this.currentText);
-        this.text = this.currentText;
-      }
-    },
-    startProcessing: function() {
-      grabbingSuggestions = true;
-    }
-  }
-  
-  var showResults = function(message) {
-    window.App.$items.html('');
-    window.IGC.Api.getTips(message, localStorage.styleguide);
-  }
+    };
 
-  ready();
+    var autorunManager,
+        styleguideManager,
+        navigationManager,
+        feedbackManager,
+        $tooltip,
+        initializeElements = function () {
+            styleguideManager = new window.App.StyleguideManager();
+            navigationManager = new window.App.NavigationManager();
+            feedbackManager = new window.App.FeedbackManager(styleguideManager);
+            autorunManager = new window.App.AutorunManager(feedbackManager);
+
+            $tooltip = $('[data-tool-tip]');
+            $tooltip.tipr();
+        },
+        ready = function () {
+            initializeElements();
+            window.IGC.Api.getStyleguides(function(resp) {
+                styleguideManager.renderStyleguides(resp);
+            });
+        };
+
+    // The initialize function must be run each time a new page is loaded
+    if (window.Office) {
+        Office.initialize = function (reason) {
+            $(document).ready(function () {
+                window.debug.log('Office.initialize called');
+                ready();
+            });
+        }
+    } else {
+        $(document).ready(function () {
+            window.debug.log('Office does not exist');
+            ready();
+        });
+    }
 
 })();
